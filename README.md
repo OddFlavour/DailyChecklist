@@ -16,7 +16,9 @@ Technical Details:
 ## General Overview
 There will be one endpoint available, the root endpoint: `{base-url}/`
 
-The page will contain a calendar (represented by `Calendar` component):
+*TODO: The user will need to log in to access their calendar. Most likely through some username/password.*
+
+The page will contain a calendar on the right (represented by `Calendar` component):
 - 6 rows (showing days of the month)
 - each row spans Sunday, Monday, ..., Saturday
 - each of the days will be represented by a `DayCell` component
@@ -39,13 +41,32 @@ It will also contain an Add Event button:
 
 ## Components
 ### $ AppComponent
-> Holds the CalendarComponent, AddEventButtonComponent, DayPlanComponent
+> Holds the CalendarComponent, AddEventButtonComponent, DayPlanComponent.
+
 ### $ CalendarComponent
 > Holds a list of `CalendarCellComponent`s, each representing a day in a month.
+
 ### $ CalendarCellComponent
 > Holds a list of events to display in the cell.
 >
+> Events will be represented by a label, text overflow will becomes ellipsis.
 > - Completed events will be highlighted in green
 > - Incomplete events will be highlighted in gray
+
 ### $ AddEventButtonComponent
+> Clicking on the button will open a modal.
+>
+> The modal will include:
+> - Title of event [text field]
+> - Start date [date field]
+> - Save button
+> - Cancel button (only way to exit modal)
+> - Success/failure message
+
 ### $ DayPlanComponent
+> Shows the list of events in full detail, text overflow will wrap to next line instead of becoming ellipsis.
+>
+> Always showing, default initial view will be today's date.
+
+## Architecture
+![alt text](./architecture_frontend.png)
