@@ -69,4 +69,7 @@ It will also contain an Add Event button:
 > Always showing, default initial view will be today's date.
 
 ## Architecture
-![alt text](./architecture_frontend.png)
+![Frontend Architecture](./architecture_frontend.png)
+
+## Design
+![Frontend Design](./design_frontend.png)
