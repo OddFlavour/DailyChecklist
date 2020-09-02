@@ -12,6 +12,12 @@ Technical Details:
 
 `Event` - an item on the day plan that's been added by the user
 
+`Date` - formatted as `2020-08-01` (month starts at 1, day starts at 1)
+
+`Day of Month (dMonth)` - in `2020-08-01`,the `dMonth` would be `1`
+
+`Day of Week (dWeek)` - Sunday=0, Monday=1, ..., Saturday=6
+
 # Frontend
 ## General Overview
 There will be one endpoint available, the root endpoint: `{base-url}/`
