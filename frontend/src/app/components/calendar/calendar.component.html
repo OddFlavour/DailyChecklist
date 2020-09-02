@@ -1,7 +1,12 @@
-<div class="d-flex flex-row align-items-center justify-content-center" style="font-size: 20pt; margin-top: 10px; margin-bottom: 10px;">
-  <button class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>
-  <span class="text-center" style="padding-left: 20px; padding-right: 20px;">{{ month[currMonth] }}</span>
-  <button class="btn btn-primary"><i class="fas fa-angle-double-right"></i></button>
+<div
+  class="d-flex flex-row align-items-center justify-content-center"
+  style="font-size: 20pt; margin-top: 10px; margin-bottom: 10px;"
+>
+  <button class="btn btn-primary" (click)="navigateMonth(-1)"><i class="fas fa-angle-double-left"></i></button>
+  <span class="text-center flex-grow-1" style="padding-left: 20px; padding-right: 20px;">
+    {{ month[cs.currMonth] + ' ' + cs.currYear }}
+  </span>
+  <button class="btn btn-primary" (click)="navigateMonth(1)"><i class="fas fa-angle-double-right"></i></button>
 </div>
 
 <div class="d-flex flex-column">

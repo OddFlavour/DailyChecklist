@@ -16,10 +16,13 @@ export class CalendarCellComponent implements OnInit {
 
   events: EventModel[] = [];
 
-  constructor(private cs: CalendarService) { }
+  constructor(public cs: CalendarService) { }
 
   ngOnInit(): void {
-    this.events = this.cs.getEventsOnDate(this.cell.date);
+    console.log('attached');
+    this.cs.currMonthUpdated$.subscribe(value => {
+      setTimeout(() => this.events = this.cs.getEventsOnDate(this.cell.date), 0);
+    });
   }
 
   getEventLabels(): string[] {

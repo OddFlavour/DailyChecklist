@@ -17,13 +17,12 @@ export class CalendarComponent implements OnInit {
   daysLoop = [0, 1, 2, 3, 4, 5, 6];
 
   calendarCells: CalendarCellModel[] = [];
-  currMonth: Month;
 
   public get month(): typeof Month {
     return Month;
   }
 
-  constructor(private cs: CalendarService) {
+  constructor(public cs: CalendarService) {
   }
 
   ngOnInit(): void {
@@ -32,15 +31,38 @@ export class CalendarComponent implements OnInit {
     /*
     Set the initial state for the calendar
      */
-
     // Month[{int}] will map the int to a string (enum name)
     // Month[{string}] will map the string to a Month
-    this.currMonth = Month[Month[today.getMonth()]];
+    this.cs.currYear = today.getFullYear();
+    this.cs.currMonth = Month[Month[today.getMonth()]];
     this.cs.currDate = toDate(today.toISOString());
 
+    this.updateCalendar(today);
+  }
+
+  /**
+   * On click of a cell, parse the string. Then set that string as the 'currDate' in CalendarService.
+   */
+  onClickCell(w: number, d: number): void {
+    const focus = this.calendarCells[d + (w * 7)];
+
+    this.cs.currDate = focus.date;
+  }
+
+  navigateMonth(direction: number): void {
+    const date = new Date(this.cs.currYear, this.cs.currMonth);
+    date.setMonth(date.getMonth() + direction);
+
+    this.cs.currYear = date.getFullYear();
+    this.cs.currMonth = Month[Month[date.getMonth()]];
+
+    this.updateCalendar(date);
+  }
+
+  private updateCalendar(currDate: Date): void {
     // Perform offset calculation to determine what the first 'CalendarCellModel.ts' should show
     // The offset calculation: subtract whatever day of the week the 1st of the month is on from the 1st of the month
-    const start = new Date(today.getFullYear(), today.getMonth(), 1);
+    const start = new Date(currDate.getFullYear(), currDate.getMonth(), 1);
     start.setDate(start.getDate() - start.getDay());
 
     for (let i = 0; i < this.NUMBER_OF_CELLS; i++) {
@@ -54,14 +76,5 @@ export class CalendarComponent implements OnInit {
       // Increment to next day
       start.setDate(start.getDate() + 1);
     }
-  }
-
-  /**
-   * On click of a cell, parse the string. Then set that string as the 'currDate' in CalendarService.
-   */
-  onClickCell(w: number, d: number): void {
-    const focus = this.calendarCells[d + (w * 7)];
-
-    this.cs.currDate = focus.date;
   }
 }

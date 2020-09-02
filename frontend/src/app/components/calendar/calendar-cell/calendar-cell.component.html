@@ -1,4 +1,8 @@
-{{ cell.dMonth }}
+<div
+  [ngStyle]="{'color': cs.currMonth == cell.month ? 'black' : 'lightgray'}"
+>
+  {{ cell.dMonth }}
+</div>
 <p
   style="
   background-color: orange;border-radius: 5px; font-size: 10pt; margin: 2px;
