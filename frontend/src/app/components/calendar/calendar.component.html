@@ -1,0 +1,22 @@
+<div class="d-flex flex-row align-items-center justify-content-center" style="font-size: 20pt; margin-top: 10px; margin-bottom: 10px;">
+  <button class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>
+  <span class="text-center" style="padding-left: 20px; padding-right: 20px;">{{ month[currMonth] }}</span>
+  <button class="btn btn-primary"><i class="fas fa-angle-double-right"></i></button>
+</div>
+
+<div class="d-flex flex-column">
+  <div
+    class="d-flex flex-row"
+    style="height: 20%; margin-bottom: 1px;"
+    *ngFor="let w of weeksLoop"
+  >
+
+    <app-calendar-cell
+      *ngFor="let d of daysLoop"
+      [cell]="calendarCells[d + (w * 7)]"
+
+      (click)="onClickCell(w, d)"
+    >
+    </app-calendar-cell>
+  </div>
+</div>

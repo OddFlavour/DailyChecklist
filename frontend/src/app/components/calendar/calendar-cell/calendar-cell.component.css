@@ -1,0 +1,15 @@
+:host:hover {
+  cursor: pointer;
+}
+
+:host {
+  outline: 1px solid black;
+  min-height: 15vh;
+  width: 100%;
+  margin-right: 1px;
+
+  /*
+  Used to help mitigate flexbox's behaviour to fully display content
+   */
+  min-width: 0;
+}

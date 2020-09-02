@@ -1,0 +1,10 @@
+{{ cell.dMonth }}
+<p
+  style="
+  background-color: orange;border-radius: 5px; font-size: 10pt; margin: 2px;
+  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+"
+  *ngFor="let label of getEventLabels()"
+>
+  {{ label }}
+</p>
