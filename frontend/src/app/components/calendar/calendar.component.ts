@@ -26,6 +26,11 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Set up subscription
+    this.cs.currMonthUpdated$.subscribe(value => {
+      this.updateCalendar(new Date(this.cs.currYear, this.cs.currMonth));
+    });
+
     const today = new Date();
 
     /*
@@ -35,9 +40,7 @@ export class CalendarComponent implements OnInit {
     // Month[{string}] will map the string to a Month
     this.cs.currYear = today.getFullYear();
     this.cs.currMonth = Month[Month[today.getMonth()]];
-    this.cs.currDate = toDate(today.toISOString());
-
-    this.updateCalendar(today);
+    this.cs.currDate = toDate(today);
   }
 
   /**
@@ -49,14 +52,31 @@ export class CalendarComponent implements OnInit {
     this.cs.currDate = focus.date;
   }
 
+  /**
+   * On click of Home, return calendar state to today's month and year
+   */
+  onClickHome(): void {
+    const today = new Date();
+
+    this.cs.currYear = today.getFullYear();
+    this.cs.currMonth = Month[Month[today.getMonth()]];
+  }
+
+  /**
+   * On click of navigation buttons, increment/decrement the month
+   * @param direction +1/-1/0
+   */
   navigateMonth(direction: number): void {
+    // Failsafe for misuse when 'direction not +1/-1/0'
+    if (Math.abs(direction) > 1) {
+      return;
+    }
+
     const date = new Date(this.cs.currYear, this.cs.currMonth);
     date.setMonth(date.getMonth() + direction);
 
     this.cs.currYear = date.getFullYear();
     this.cs.currMonth = Month[Month[date.getMonth()]];
-
-    this.updateCalendar(date);
   }
 
   private updateCalendar(currDate: Date): void {
@@ -67,7 +87,7 @@ export class CalendarComponent implements OnInit {
 
     for (let i = 0; i < this.NUMBER_OF_CELLS; i++) {
       this.calendarCells[i] = {
-        date: toDate(start.toISOString()),
+        date: toDate(start),
         year: start.getFullYear(),
         month: start.getMonth(),
         dMonth: start.getDate()

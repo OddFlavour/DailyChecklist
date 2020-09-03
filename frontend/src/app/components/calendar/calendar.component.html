@@ -4,6 +4,7 @@
 >
   <button class="btn btn-primary" (click)="navigateMonth(-1)"><i class="fas fa-angle-double-left"></i></button>
   <span class="text-center flex-grow-1" style="padding-left: 20px; padding-right: 20px;">
+    <a href="#" (click)="onClickHome()"><i class="fas fa-home fa"></i></a>
     {{ month[cs.currMonth] + ' ' + cs.currYear }}
   </span>
   <button class="btn btn-primary" (click)="navigateMonth(1)"><i class="fas fa-angle-double-right"></i></button>
@@ -20,6 +21,7 @@
       *ngFor="let d of daysLoop"
       [cell]="calendarCells[d + (w * 7)]"
 
+      [ngStyle]="{'background-color': cs.currDate == calendarCells[d + (w * 7)].date ? 'orange' : 'transparent'}"
       (click)="onClickCell(w, d)"
     >
     </app-calendar-cell>

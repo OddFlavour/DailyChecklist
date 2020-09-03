@@ -4,5 +4,9 @@
 <div
   *ngFor="let e of events"
 >
+  <i
+    class="fa"
+    [ngClass]="{'fa-check-square fas': e.isComplete, 'fa-square far': !e.isComplete}"
+  ></i>
   {{ e.desc }}
 </div>
