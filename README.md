@@ -14,7 +14,7 @@ Technical Details:
 
 `Date` - formatted as `2020-08-01` (month starts at 1, day starts at 1)
 
-`Day of Month (dMonth)` - in `2020-08-01`,the `dMonth` would be `1`
+`Day of Month (dMonth)` - in `2020-08-01`, the `dMonth` would be `1`
 
 `Day of Week (dWeek)` - Sunday=0, Monday=1, ..., Saturday=6
 
@@ -27,9 +27,9 @@ There will be one endpoint available, the root endpoint: `{base-url}/`
 The page will contain a calendar on the right (represented by `Calendar` component):
 - 6 rows (showing days of the month)
 - each row spans Sunday, Monday, ..., Saturday
-- each of the days will be represented by a `DayCell` component
+- each of the days will be represented by a `CalendarCell` component
 - the user can navigate between months (via prev/next buttons)
-- each `DayCell` will be clickable and will update the day plan accordingly
+- each `CalendarCell` will be clickable and will update the day plan accordingly
 
 It will also contain a day plan on the left:
 - with events added by user
