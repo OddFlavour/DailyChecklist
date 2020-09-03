@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {EventModel} from '../models/EventModel';
-import {BehaviorSubject, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {Month} from '../models/Month';
 
 @Injectable({
@@ -27,9 +27,7 @@ export class CalendarService {
     this.pCurrMonth = newMonth;
 
     // Notify subscribers
-    this.currMonthUpdatedSource.next(this.pCurrMonth);
-
-    console.log('subscribers');
+    this.currMonthUpdatedSource.next();
   }
 
   currYear: number;
@@ -37,10 +35,15 @@ export class CalendarService {
   private events: {} = {
     '2020-09-02': [
       { date: '2020-09-02', desc: 'Test', isComplete: false },
-      { date: '2020-09-02', desc: 'Test', isComplete: false },
+      { date: '2020-09-02', desc: 'Test', isComplete: true },
       { date: '2020-09-02', desc: 'Test', isComplete: false },
       { date: '2020-09-02', desc: 'Test', isComplete: false },
       { date: '2020-09-02', desc: 'Test', isComplete: false }
+    ],
+    '2020-07-23': [
+      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false },
+      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false },
+      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false }
     ]
   };
 
@@ -49,7 +52,7 @@ export class CalendarService {
   // Observable
   currDateUpdated$ = this.currDateUpdatedSource.asObservable();
 
-  private currMonthUpdatedSource = new BehaviorSubject(this.pCurrMonth);
+  private currMonthUpdatedSource = new Subject();
   currMonthUpdated$ = this.currMonthUpdatedSource.asObservable();
 
   constructor() { }
