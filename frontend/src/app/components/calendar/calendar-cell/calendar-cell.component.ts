@@ -12,7 +12,17 @@ export class CalendarCellComponent implements OnInit {
 
   readonly MAX_ROWS = 3;
 
-  @Input() cell: CalendarCellModel;
+  private pCell: CalendarCellModel;
+  @Input()
+  get cell(): CalendarCellModel {
+    return this.pCell;
+  }
+  set cell(cell: CalendarCellModel) {
+    this.pCell = cell;
+
+    // Update the events to display whenever the cell itself gets changed
+    this.events = this.cs.getEventsOnDate(this.cell.date);
+  }
 
   events: EventModel[] = [];
 
@@ -20,14 +30,6 @@ export class CalendarCellComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Attach as an subscriber
-    this.cs.currMonthUpdated$.subscribe(value => {
-      // Set timeout to delay until next event loop
-      setTimeout(() => this.events = this.cs.getEventsOnDate(this.cell.date), 0);
-    });
-
-    // Initial value set, future updates will be handled by the subscription
-    this.events = this.cs.getEventsOnDate(this.cell.date);
   }
 
   getEventLabels(): { text: string, isComplete: boolean }[] {
