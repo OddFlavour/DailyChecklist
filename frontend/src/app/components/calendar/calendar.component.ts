@@ -31,6 +31,10 @@ export class CalendarComponent implements OnInit {
       this.updateCalendar(new Date(this.cs.currYear, this.cs.currMonth));
     });
 
+    this.cs.eventsUpdated$.subscribe(value => {
+      this.updateCalendar(new Date(this.cs.currYear, this.cs.currMonth));
+    });
+
     const today = new Date();
 
     /*
@@ -80,6 +84,7 @@ export class CalendarComponent implements OnInit {
   }
 
   private updateCalendar(currDate: Date): void {
+    const t0 = performance.now();
     // Perform offset calculation to determine what the first 'CalendarCellModel.ts' should show
     // The offset calculation: subtract whatever day of the week the 1st of the month is on from the 1st of the month
     const start = new Date(currDate.getFullYear(), currDate.getMonth(), 1);

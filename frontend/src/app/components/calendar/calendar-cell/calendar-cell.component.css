@@ -13,3 +13,17 @@
    */
   min-width: 0;
 }
+
+.calendar-cell-label {
+  border-radius: 5px;
+  font-size: 10pt;
+  margin: 2px;
+  background-color: gray;
+
+  /* Ellipsis on overflow */
+  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+}
+
+.calendar-cell-label.complete {
+  background-color: darkseagreen;
+}

@@ -55,10 +55,25 @@ export class CalendarService {
   private currMonthUpdatedSource = new Subject();
   currMonthUpdated$ = this.currMonthUpdatedSource.asObservable();
 
+  private eventsUpdatedSource = new Subject();
+  eventsUpdated$ = this.eventsUpdatedSource.asObservable();
+
   constructor() { }
 
   getEventsOnDate(date: string): EventModel[] {
     // TODO(jackson): If 'this.events[date]' is null, then fetch from backend server
     return this.events[date] ?? [];
+  }
+
+  addNewEvent(formValue: EventModel): void {
+    formValue.isComplete = false;
+
+    if (!this.events[formValue.date]) {
+      this.events[formValue.date] = [];
+    }
+
+    (this.events[formValue.date] as EventModel[]).push(formValue);
+
+    this.eventsUpdatedSource.next();
   }
 }

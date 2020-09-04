@@ -5,7 +5,10 @@ import {AppComponent} from './app.component';
 import {CalendarComponent} from './components/calendar/calendar.component';
 import {DayPlanComponent} from './components/day-plan/day-plan.component';
 import {CalendarCellComponent} from './components/calendar/calendar-cell/calendar-cell.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
+import {NgbDateAdapter, NgbDateNativeAdapter, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {AddEventButtonComponent} from './components/add-event-button/add-event-button.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,10 +16,13 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     CalendarComponent,
     DayPlanComponent,
     CalendarCellComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddEventButtonComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

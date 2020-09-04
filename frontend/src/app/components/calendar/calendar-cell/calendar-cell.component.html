@@ -4,12 +4,10 @@
   {{ cell.dMonth }}
 </div>
 <p
-  style="
-  border-radius: 5px; font-size: 10pt; margin: 2px;
-  text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
-"
+  class="calendar-cell-label"
+
   *ngFor="let label of getEventLabels()"
-  [ngStyle]="{'background-color': label.isComplete ? 'DarkSeaGreen' : 'gray'}"
+  [ngClass]="{'complete': label.isComplete}"
 >
   {{ label.text }}
 </p>

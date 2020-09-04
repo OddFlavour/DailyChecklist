@@ -18,6 +18,10 @@ export class DayPlanComponent implements OnInit {
     this.cs.currDateUpdated$.subscribe(value => {
       this.events = this.cs.getEventsOnDate(this.cs.currDate);
     });
+
+    this.cs.eventsUpdated$.subscribe(value => {
+      this.events = this.cs.getEventsOnDate(this.cs.currDate);
+    });
   }
 
 }

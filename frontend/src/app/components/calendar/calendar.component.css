@@ -1,0 +1,11 @@
+.calendar-container {
+  font-size: 20pt; margin-top: 10px; margin-bottom: 10px;
+}
+
+.calendar-row {
+  height: 20%; margin-bottom: 1px;
+}
+
+.calendar-month-title {
+  padding-left: 20px; padding-right: 20px;
+}
