@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {EventModel} from '../models/EventModel';
 import {Subject} from 'rxjs';
 import {Month} from '../models/Month';
@@ -9,9 +9,14 @@ import {Month} from '../models/Month';
 export class CalendarService {
 
   private pCurrDate: string;
+  private pCurrMonth: Month;
+
+  currYear: number;
+
   get currDate(): string {
     return this.pCurrDate;
   }
+
   set currDate(newDate: string) {
     this.pCurrDate = newDate;
 
@@ -19,10 +24,10 @@ export class CalendarService {
     this.currDateUpdatedSource.next();
   }
 
-  private pCurrMonth: Month;
   get currMonth(): Month {
     return this.pCurrMonth;
   }
+
   set currMonth(newMonth: Month) {
     this.pCurrMonth = newMonth;
 
@@ -30,23 +35,24 @@ export class CalendarService {
     this.currMonthUpdatedSource.next();
   }
 
-  currYear: number;
-
   private events: {} = {
     '2020-09-02': [
-      { date: '2020-09-02', desc: 'Test', isComplete: false },
-      { date: '2020-09-02', desc: 'Test', isComplete: true },
-      { date: '2020-09-02', desc: 'Test', isComplete: false },
-      { date: '2020-09-02', desc: 'Test', isComplete: false },
-      { date: '2020-09-02', desc: 'Test', isComplete: false }
+      {date: '2020-09-02', desc: 'Test', isComplete: false},
+      {date: '2020-09-02', desc: 'Test', isComplete: true},
+      {date: '2020-09-02', desc: 'Test', isComplete: false},
+      {date: '2020-09-02', desc: 'Test', isComplete: false},
+      {date: '2020-09-02', desc: 'Test', isComplete: false}
     ],
     '2020-07-23': [
-      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false },
-      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false },
-      { date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false }
+      {date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false},
+      {date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false},
+      {date: '2020-07-23', desc: 'Longer name test for fun', isComplete: false}
     ]
   };
 
+  /*
+  [START] Observable List
+   */
   // Observable source
   private currDateUpdatedSource = new Subject();
   // Observable
@@ -58,7 +64,12 @@ export class CalendarService {
   private eventsUpdatedSource = new Subject();
   eventsUpdated$ = this.eventsUpdatedSource.asObservable();
 
-  constructor() { }
+  /*
+  [END] Observable List
+   */
+
+  constructor() {
+  }
 
   getEventsOnDate(date: string): EventModel[] {
     // TODO(jackson): If 'this.events[date]' is null, then fetch from backend server

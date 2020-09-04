@@ -2,11 +2,13 @@
   {{ cs.currDate }}
 </div>
 <div
-  *ngFor="let e of events"
+  class="form-check"
+  *ngFor="let e of events; let i = index"
 >
-  <i
-    class="fa"
-    [ngClass]="{'fa-check-square fas': e.isComplete, 'fa-square far': !e.isComplete}"
-  ></i>
-  {{ e.desc }}
+  <input class="form-check-input" type="checkbox"
+         [id]="'event' + i"
+         [checked]="e.isComplete"
+         (change)="onClickLabel(e)"
+  >
+  <label class="form-check-label clickable" [attr.for]="'event' + i">{{ e.desc }}</label>
 </div>

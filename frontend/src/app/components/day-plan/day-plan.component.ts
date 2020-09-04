@@ -24,4 +24,7 @@ export class DayPlanComponent implements OnInit {
     });
   }
 
+  onClickLabel(e: EventModel): void {
+    e.isComplete = !e.isComplete;
+  }
 }
