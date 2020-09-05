@@ -18,6 +18,10 @@ Technical Details:
 
 `Day of Week (dWeek)` - Sunday=0, Monday=1, ..., Saturday=6
 
+# Design and Documentation
+<details>
+<summary>Frontend</summary>
+
 # Frontend
 ## General Overview
 There will be one endpoint available, the root endpoint: `{base-url}/`
@@ -36,14 +40,14 @@ It will also contain a day plan on the left:
 - upon initial launch, the default day plan will be today's date (timezone applied)
 - the user can change the day plan by navigating to another date
 - the events can be completed/incomplete
-- user is also able to go back in time and change status of events
+- user is also able to go back in time and change status of events by clicking on the events
 - HOWEVER, they cannot go forward in time to change the status (in order to implement this, future dates should not have events pre-populated)
 
 It will also contain an Add Event button:
 - clicking on this button will show a modal, where the user can specify:
     - title of event
     - start date
-- upon success/failure, message is provided accordingly
+- upon creation success/failure, message is provided accordingly
 
 ## Components
 ### $ AppComponent
@@ -74,8 +78,76 @@ It will also contain an Add Event button:
 >
 > Always showing, default initial view will be today's date.
 
+## Services
+### CalendarService
+> Provides information about the calendar such as current selected month, current selected date, current selected year
+
 ## Architecture
 ![Frontend Architecture](./architecture_frontend.png)
 
 ## Design
 ![Frontend Design](./design_frontend.png)
+</details>
+
+
+# Backend
+## General Overview
+- Backend will use NodeJS with Express to handle HTTP requests
+- Database used will be MongoDB, for document structures, see `Models` section
+- (TODO) Some kind of authentication process for user login
+
+Endpoints available:
+- `[GET] /api/events?startDate={start}&endDate={end}`
+    - Header to include {user-id}
+    - Gets the events for {user-id} from {start} to {end}
+- `[POST] /api/events`
+    - Header to include {user-id}
+    - Adds a new event under the user
+    - Expected request payload:
+    ```
+    {
+        desc: String,
+        date: String (yyyy-mm-dd)
+    }
+
+    Sample:
+    {
+        desc: 'testing description'
+        date: '2020-08-01'
+    }
+    ```
+- `[DELETE] /api/events/{event-id}`
+    - Header to include {user-id}
+    - Deletes an event from the user
+- `[POST] /api/events/{event-id}`
+    - Header to include {user-id}
+    - Updates the status of an event on a date
+    - Expected request payload:
+    ```
+    {
+        date: String (yyyy-mm-dd)
+    }
+
+    Sample:
+    {
+        date: '2020-08-01'
+    }
+    ```
+
+## Models
+### $ Event
+```
+{
+    id: Integer,
+    userId: Integer,
+    desc: String,
+    date: String (yyyy-mm-dd)
+}
+```
+
+### $ User
+```
+{
+    id: Integer
+}
+```
