@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 mongoose.connect(
     'mongodb://localhost/dailyChecklistDB'
-    , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}  // These options are used to prevent warning messages
+    , {useNewUrlParser: true, useUnifiedTopology: true}  // These options are used to prevent warning messages
 );
 
 // Models
@@ -23,10 +23,47 @@ db.once('open', function () {
     console.log('Database has connected');
 });
 
+// CORS
+router.use((req, res, next) => {
+    res.header("Access-Control-Allow-Headers", "user-id");
+    next();
+});
+
 // Endpoint parsers
 router.use(bodyParser.json());
 
 // Endpoints
+router.get('/', async (req, res) => {
+    const userId = req.get('user-id');
+    const startDate = req.query['startDate'];
+    const endDate = req.query['endDate'];
+
+    // Query for events belonging to the user
+    let err;
+    const docs = await Event.find({userId: userId}).exec().catch(reason => err = reason);
+
+    if (err) {
+        res.status(400).send(err.message);
+        return;
+    }
+
+    // Check through all the events and their available dates, and extract the dates that are within range
+    const result = {};
+    for (let doc of docs) {
+        for (let entry of doc.dates) {
+            if (entry.date >= startDate && entry.date <= endDate) {
+                const temp = { _id: doc._id, date: entry.date, desc: doc.desc, isComplete: entry.isComplete };
+
+                if (!result[temp.date]) result[temp.date] = [];
+
+                result[temp.date].push(temp);
+            }
+        }
+    }
+
+    res.json(result);
+});
+
 router.post('/', async (req, res) => {
     const userId = req.get('user-id');
 
@@ -90,11 +127,7 @@ router.post('/:eventId', async (req, res) => {
     const opts = {runValidators: true};
 
     let err;
-    await Event.updateOne(filter, update, opts, (e) => {
-        if (e) {
-            err = e;
-        }
-    });
+    await Event.updateOne(filter, update, opts).catch(reason => err = reason);
 
     if (err) {
         res.status(400).send(err.message);
