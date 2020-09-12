@@ -22,8 +22,6 @@ export class CalendarCellComponent implements OnInit {
 
     // Update the events to display whenever the cell itself gets changed
     this.events = this.cs.getEventsOnDate(this.pCell.date);
-
-    console.log('test');
   }
 
   events: EventModel[] = [];

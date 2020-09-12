@@ -25,6 +25,10 @@ export class DayPlanComponent implements OnInit {
   }
 
   onClickLabel(e: EventModel): void {
-    e.isComplete = !e.isComplete;
+    // We don't want to alter the actual object, so creating a clone and manipulating it instead
+    const clone = JSON.parse(JSON.stringify(e));
+    clone.isComplete = !clone.isComplete;
+
+    this.cs.updateEventStatus(clone);
   }
 }
