@@ -25,7 +25,7 @@ db.once('open', function () {
 
 // CORS
 router.use((req, res, next) => {
-    res.header("Access-Control-Allow-Headers", "user-id");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, " + "user-id");
     next();
 });
 
@@ -132,7 +132,7 @@ router.post('/:eventId', async (req, res) => {
     if (err) {
         res.status(400).send(err.message);
     } else {
-        res.end();
+        res.json(req.body);
     }
 });
 
